@@ -50,19 +50,69 @@ public class WelcomeScreen extends JDialog {
 		
 		JLabel lblNewLabel = new JLabel("Welcome to HashCode Tool. Please select option: ");
 		lblNewLabel.setForeground(UIManager.getColor("CheckBox.foreground"));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel.setBounds(99, 11, 413, 40);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(80, 11, 413, 40);
 		getContentPane().add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Symmetric Encryption");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("1");
 			}
 		});
-		btnNewButton.setBorder(new RoundedBorder(15)); //10 is the radius
+		btnNewButton.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnNewButton.setBackground(Color.MAGENTA);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnNewButton.setBackground(UIManager.getColor("control"));
+		    }
+		});
+		JButton btnNewButton1 = new JButton("Asymmetric Encryption");
+		btnNewButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("2");
+			}
+		});
+		btnNewButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnNewButton1.setBackground(Color.MAGENTA);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnNewButton1.setBackground(UIManager.getColor("control"));
+		    }
+		});
+		JButton btnNewButton2 = new JButton("Hasing");
+		btnNewButton2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("1");
+			}
+		});
+		btnNewButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnNewButton2.setBackground(Color.MAGENTA);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnNewButton2.setBackground(UIManager.getColor("control"));
+		    }
+		});
+		btnNewButton.setBorder(new RoundedBorder(15));
+		btnNewButton1.setBorder(new RoundedBorder(15));
+		btnNewButton2.setBorder(new RoundedBorder(15));
 		btnNewButton.setBackground(Color.LIGHT_GRAY);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnNewButton.setBounds(142, 61, 235, 33);
+		btnNewButton1.setBackground(Color.LIGHT_GRAY);
+		btnNewButton1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnNewButton2.setBackground(Color.LIGHT_GRAY);
+		btnNewButton2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnNewButton.setBounds(110, 62, 299, 49);
+		btnNewButton1.setBounds(110, 127, 299, 49);
+		btnNewButton2.setBounds(110, 199, 299, 49);
 		getContentPane().add(btnNewButton);
+		getContentPane().add(btnNewButton1);
+		getContentPane().add(btnNewButton2);
 	}
 }
