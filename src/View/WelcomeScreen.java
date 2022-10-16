@@ -57,7 +57,8 @@ public class WelcomeScreen extends JDialog {
 		JButton btnNewButton = new JButton("Symmetric Encryption");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("1");
+				SymmetricEncryption symmetricEncryption = new SymmetricEncryption();
+				symmetricEncryption.setVisible(true);
 			}
 		});
 		btnNewButton.addMouseListener(new java.awt.event.MouseAdapter() {
