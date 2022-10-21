@@ -88,7 +88,8 @@ public class WelcomeScreen extends JDialog {
 		JButton btnNewButton2 = new JButton("Hasing");
 		btnNewButton2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("1");
+				HasingEncryption hasingEncryption = new HasingEncryption();
+				hasingEncryption.setVisible(true);
 			}
 		});
 		btnNewButton2.addMouseListener(new java.awt.event.MouseAdapter() {
