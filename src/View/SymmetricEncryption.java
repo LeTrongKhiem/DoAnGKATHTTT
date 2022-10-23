@@ -23,11 +23,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 import Logic.SymmetricEncryptionLogic;
+import javax.swing.JTextField;
 
 public class SymmetricEncryption extends JFrame {
-	
+
 	private SymmetricEncryptionLogic logic;
 	private JPanel contentPane;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -77,8 +79,8 @@ public class SymmetricEncryption extends JFrame {
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
 		/* create three JPanel, which is content of tabs */
-		JPanel panel1 = createPane1();
-		JPanel panel2 = createPane2();
+		JPanel panel1 = dichChuyen();
+		JPanel panel2 = thayThe();
 		JPanel panel3 = createJPanel("content of panel 3");
 		JPanel panel4 = createJPanel("4");
 		JPanel panel5 = createJPanel("5");
@@ -101,25 +103,19 @@ public class SymmetricEncryption extends JFrame {
 		return panel;
 	}
 
-	private JPanel createPane1() {
+	private JPanel dichChuyen() {
 		JPanel panel = new JPanel();
 
 		JPanel panel_1 = new JPanel();
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 1182, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(22, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 635, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addContainerGap()
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 1182, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(22, Short.MAX_VALUE)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addContainerGap()
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 635, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		panel_1.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Ceasar Hasing Generator");
@@ -171,7 +167,7 @@ public class SymmetricEncryption extends JFrame {
 		spinner.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		spinner.setBounds(234, 231, 92, 45);
 		panel_1.add(spinner);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("Shift");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_3.setBounds(85, 231, 139, 45);
@@ -198,47 +194,40 @@ public class SymmetricEncryption extends JFrame {
 		panel_1.add(lblNewLabel_2);
 
 		panel_1.add(textArea_1);
-		
+
 		JButton btnNewButton_1_1 = new JButton("Decode");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					try {
-						int shift = (Integer) spinner.getValue();
-						String ceasarEncode = logic.CeasarDecode(textArea.getText(), shift);
-						textArea_1.setText(ceasarEncode);
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
+				try {
+					int shift = (Integer) spinner.getValue();
+					String ceasarEncode = logic.CeasarDecode(textArea.getText(), shift);
+					textArea_1.setText(ceasarEncode);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		btnNewButton_1_1.setBounds(234, 326, 139, 38);
 		panel_1.add(btnNewButton_1_1);
-		
-		
+
 		panel_1.add(lblNewLabel_3);
 		panel.setLayout(gl_panel);
 		return panel;
 	}
-	
-	private JPanel createPane2() {
+
+	private JPanel thayThe() {
 		JPanel panel = new JPanel();
 
 		JPanel panel_1 = new JPanel();
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 1182, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(22, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 635, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addContainerGap()
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 1182, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(22, Short.MAX_VALUE)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addContainerGap()
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 635, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		panel_1.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Substitution Cipher Hasing Generator");
@@ -284,25 +273,35 @@ public class SymmetricEncryption extends JFrame {
 		});
 		btnNewButton.setBounds(938, 70, 152, 30);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
+		JButton btnNewButton_2 = new JButton("Random Key");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField.setText(logic.randomKey());
+			}
+		});
 		panel_1.add(btnNewButton);
 		JSpinner spinner = new JSpinner();
 		spinner.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		spinner.setBounds(234, 231, 92, 45);
-		panel_1.add(spinner);
-		
-		JLabel lblNewLabel_3 = new JLabel("Shift");
+		spinner.setBounds(690, 231, 74, 45);
+		JLabel lblNewLabel_3 = new JLabel("Key");
+		JLabel lblNewLabel_3_1 = new JLabel("Shift");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_3.setBounds(85, 231, 139, 45);
 		JTextArea textArea_1 = new JTextArea();
 		textArea_1.setBounds(62, 434, 1028, 129);
 		JButton btnNewButton_1 = new JButton("Encode");
+		JLabel lblNewLabel_2 = new JLabel("Output");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_2.setBounds(52, 385, 139, 38);
+		panel_1.add(lblNewLabel_2);
+
+		panel_1.add(textArea_1);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int shift = (Integer) spinner.getValue();
-					String ceasarEncode = logic.CeasarEncode(textArea.getText(), shift);
-					textArea_1.setText(ceasarEncode);
+//					int shift = (Integer) spinner.getValue();
+//					String encodeString = logic.subtitutionEnCode(textArea.getText(), shift, textField.getText());
+//					textArea_1.setText(encodeString);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -311,30 +310,38 @@ public class SymmetricEncryption extends JFrame {
 		btnNewButton_1.setBounds(52, 326, 139, 38);
 		panel_1.add(btnNewButton_1);
 
-		JLabel lblNewLabel_2 = new JLabel("Output");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(52, 385, 139, 38);
-		panel_1.add(lblNewLabel_2);
-
-		panel_1.add(textArea_1);
 		
+
 		JButton btnNewButton_1_1 = new JButton("Decode");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					try {
-						int shift = (Integer) spinner.getValue();
-						String ceasarEncode = logic.CeasarDecode(textArea.getText(), shift);
-						textArea_1.setText(ceasarEncode);
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
+				try {
+					int shift = (Integer) spinner.getValue();
+//					String encodeString = logic.subtitutionDecode(textArea.getText(), shift, textField.getText());
+//					textArea_1.setText(encodeString);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		btnNewButton_1_1.setBounds(234, 326, 139, 38);
 		panel_1.add(btnNewButton_1_1);
-		
-		
+
 		panel_1.add(lblNewLabel_3);
+
+		textField = new JTextField();
+		textField.setBounds(147, 236, 284, 38);
+		panel_1.add(textField);
+		textField.setColumns(10);
+
+		btnNewButton_2.setBounds(441, 239, 139, 32);
+		panel_1.add(btnNewButton_2);
+
+		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_3_1.setBounds(622, 231, 139, 45);
+		panel_1.add(lblNewLabel_3_1);
+
+		panel_1.add(spinner);
 		panel.setLayout(gl_panel);
 		return panel;
 	}
