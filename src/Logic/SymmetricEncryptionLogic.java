@@ -40,6 +40,8 @@ public class SymmetricEncryptionLogic {
 
 		return text;
 	}
+	
+	//asdasdasdasdsa
 
 	public String subtitutionDecode(String data, String keyStr) {
 //		data = data.toLowerCase();

@@ -70,6 +70,7 @@ public class Hash {
 		
 		System.out.println(hash.hash("demo"));
 		
+		System.out.println(hash.hashFile("C:\\Users\\User\\OneDrive\\Máy tính\\ATTT\\DoAnGiuaKy\\DB\\MD5HASH.txt"));
 	}
 	
 }

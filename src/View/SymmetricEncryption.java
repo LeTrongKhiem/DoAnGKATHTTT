@@ -23,6 +23,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 import Logic.SymmetricEncryptionLogic;
+import View.ViewComponent.AffineViewConponent;
+
 import javax.swing.JTextField;
 
 public class SymmetricEncryption extends JFrame {
@@ -53,20 +55,6 @@ public class SymmetricEncryption extends JFrame {
 	public SymmetricEncryption() {
 		setTitle("SymmetricEncryption");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setBounds(100, 100, 930, 555);
-//		contentPane = new JPanel();
-//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//		setContentPane(contentPane);
-//		contentPane.setLayout(null);
-//		
-//		JPanel panel_1 = new JPanel();
-//		panel_1.setBounds(223, 105, 10, 10);
-//		contentPane.add(panel_1);
-//
-//		JPanel panel = new JPanel();
-//		panel.setBounds(238, 10, 468, 200);
-//		contentPane.add(panel);
-//		add(createTabbedPane());
 		logic = new SymmetricEncryptionLogic();
 		getContentPane().add(createTabbedPane());
 		pack();
@@ -81,7 +69,7 @@ public class SymmetricEncryption extends JFrame {
 		/* create three JPanel, which is content of tabs */
 		JPanel panel1 = dichChuyen();
 		JPanel panel2 = thayThe();
-		JPanel panel3 = createJPanel("content of panel 3");
+		JPanel panel3 = new AffineViewConponent(logic, contentPane).affine(logic, contentPane);
 		JPanel panel4 = createJPanel("4");
 		JPanel panel5 = createJPanel("5");
 
