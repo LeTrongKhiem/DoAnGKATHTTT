@@ -22,12 +22,11 @@ import javax.swing.GroupLayout.Alignment;
 
 import Logic.SymmetricEncryptionLogic;
 
-public class AffineViewConponent extends JFrame{
+public class AffineViewComponent extends JFrame{
 	private JTextField textField;
-	public AffineViewConponent(SymmetricEncryptionLogic logic, JPanel contentPane) {
+	public AffineViewComponent(SymmetricEncryptionLogic logic, JPanel contentPane) {
 		affine(logic, contentPane);
 	}
-	
 	public JPanel affine(SymmetricEncryptionLogic logic, JPanel contentPane) {
 		JPanel panel = new JPanel();
 
@@ -43,12 +42,12 @@ public class AffineViewConponent extends JFrame{
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		panel_1.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Substitution Cipher Hasing Generator");
+		JLabel lblNewLabel = new JLabel("Affine Cipher Hasing Generator");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel.setBounds(52, 11, 391, 45);
 		panel_1.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Use this generator to create an Substitution Cipher hash of a string: ");
+		JLabel lblNewLabel_1 = new JLabel("Use this generator to create an Affine Cipher hash of a string: ");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(52, 55, 391, 45);
 		panel_1.add(lblNewLabel_1);
@@ -93,13 +92,13 @@ public class AffineViewConponent extends JFrame{
 			}
 		});
 		panel_1.add(btnNewButton);
-		JSpinner spinner = new JSpinner();
-		spinner.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		spinner.setBounds(690, 231, 74, 45);
+		JSpinner slopeJtext = new JSpinner();
+		slopeJtext.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		slopeJtext.setBounds(179, 237, 74, 45);
 		JLabel lblNewLabel_3 = new JLabel("Key");
-		JLabel lblNewLabel_3_1 = new JLabel("Shift");
+		JLabel lblNewLabel_3_1 = new JLabel("Slope (A)");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_3.setBounds(85, 231, 139, 45);
+		lblNewLabel_3.setBounds(52, 293, 139, 45);
 		JTextArea textArea_1 = new JTextArea();
 		textArea_1.setBounds(62, 434, 1028, 129);
 		JButton btnNewButton_1 = new JButton("Encode");
@@ -109,18 +108,21 @@ public class AffineViewConponent extends JFrame{
 		panel_1.add(lblNewLabel_2);
 
 		panel_1.add(textArea_1);
+		JSpinner interceptJtext = new JSpinner();
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-//					int shift = (Integer) spinner.getValue();
-//					String encodeString = logic.subtitutionEnCode(textArea.getText(), shift, textField.getText());
-//					textArea_1.setText(encodeString);
+					int slope = (Integer) slopeJtext.getValue();
+					int intercept = (Integer) interceptJtext.getValue();
+					String data = textArea.getText();
+					String encodeString = logic.affineEncode(data, slope, intercept);
+					textArea_1.setText(encodeString);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 		});
-		btnNewButton_1.setBounds(52, 326, 139, 38);
+		btnNewButton_1.setBounds(55, 349, 139, 38);
 		panel_1.add(btnNewButton_1);
 
 		
@@ -129,32 +131,57 @@ public class AffineViewConponent extends JFrame{
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int shift = (Integer) spinner.getValue();
-//					String encodeString = logic.subtitutionDecode(textArea.getText(), shift, textField.getText());
-//					textArea_1.setText(encodeString);
+					int slope = (Integer) slopeJtext.getValue();
+					int intercept = (Integer) interceptJtext.getValue();
+					String data = textArea.getText();
+					String encodeString = logic.affineDecode(data, slope, intercept);
+					textArea_1.setText(encodeString);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 		});
-		btnNewButton_1_1.setBounds(234, 326, 139, 38);
+		btnNewButton_1_1.setBounds(237, 349, 139, 38);
 		panel_1.add(btnNewButton_1_1);
 
 		panel_1.add(lblNewLabel_3);
 
 		textField = new JTextField();
-		textField.setBounds(147, 236, 284, 38);
+		textField.setBounds(122, 298, 284, 38);
 		panel_1.add(textField);
 		textField.setColumns(10);
 
-		btnNewButton_2.setBounds(441, 239, 139, 32);
+		btnNewButton_2.setBounds(416, 301, 139, 32);
 		panel_1.add(btnNewButton_2);
 
 		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_3_1.setBounds(622, 231, 139, 45);
+		lblNewLabel_3_1.setBounds(52, 237, 139, 45);
 		panel_1.add(lblNewLabel_3_1);
 
-		panel_1.add(spinner);
+		panel_1.add(slopeJtext);
+		
+		interceptJtext.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		interceptJtext.setBounds(426, 237, 74, 45);
+		panel_1.add(interceptJtext);
+		
+		JLabel lblNewLabel_3_1_1 = new JLabel("Intercept (B)");
+		lblNewLabel_3_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_3_1_1.setBounds(305, 237, 139, 45);
+		panel_1.add(lblNewLabel_3_1_1);
+		
+		JButton btnRandomAb = new JButton("Random A/B");
+		btnRandomAb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int slope = logic.randomNumber();
+				int intercept = logic.randomNumber();
+				
+				slopeJtext.setValue(slope);
+				interceptJtext.setValue(intercept);
+			}
+		});
+		btnRandomAb.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnRandomAb.setBounds(569, 250, 152, 30);
+		panel_1.add(btnRandomAb);
 		panel.setLayout(gl_panel);
 		return panel;
 	}

@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.EventQueue;
+
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,7 +24,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 import Logic.SymmetricEncryptionLogic;
-import View.ViewComponent.AffineViewConponent;
+import View.ViewComponent.AffineViewComponent;
 
 import javax.swing.JTextField;
 
@@ -69,7 +70,7 @@ public class SymmetricEncryption extends JFrame {
 		/* create three JPanel, which is content of tabs */
 		JPanel panel1 = dichChuyen();
 		JPanel panel2 = thayThe();
-		JPanel panel3 = new AffineViewConponent(logic, contentPane).affine(logic, contentPane);
+		JPanel panel3 = new AffineViewComponent(logic, contentPane).affine(logic, contentPane);
 		JPanel panel4 = createJPanel("4");
 		JPanel panel5 = createJPanel("5");
 
@@ -77,7 +78,7 @@ public class SymmetricEncryption extends JFrame {
 		tabbedPane.addTab("MA HOA DICH CHUYEN", null, panel1, "click to show panel 1");
 		tabbedPane.addTab("MA HOA THAY THE", null, panel2, "click to show panel 2");
 		tabbedPane.addTab("AFFINE", null, panel3, "click to show panel 3");
-		tabbedPane.addTab("VINEGERE", null, panel4, "click to show panel 2");
+		tabbedPane.addTab("VIGEGERE", null, panel4, "click to show panel 2");
 		tabbedPane.addTab("HILL", null, panel5, "click to show panel 3");
 
 		return tabbedPane;
@@ -90,6 +91,8 @@ public class SymmetricEncryption extends JFrame {
 		panel.add(lb);
 		return panel;
 	}
+	
+	
 
 	private JPanel dichChuyen() {
 		JPanel panel = new JPanel();
