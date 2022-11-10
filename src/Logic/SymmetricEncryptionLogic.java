@@ -21,7 +21,7 @@ public class SymmetricEncryptionLogic {
 		return result;
 	}
 
-	public String subtitutionEnCode(String data, String keyStr) {
+	public String substitutionEnCode(String data, String keyStr) {
 		String text = "";
 		String[] keySpace = new String[keyStr.length()];
 		for (int i = 0; i < keyStr.length(); i++)
@@ -37,6 +37,22 @@ public class SymmetricEncryptionLogic {
 		}
 
 		return text;
+	}
+
+	public String substitutionDecode(String data, String keyStr) {
+		String plaintext = "";
+		for (int i = 0; i < keyStr.length(); i++) {
+			char character = keyStr.charAt(i);
+			int index = data.indexOf(character);
+			int ascii = index + 65;
+			if (ascii < 65 || ascii > 90) {
+				plaintext += String.valueOf(character);
+			} else {
+				plaintext += String.valueOf((char) ascii);
+			}
+		}
+
+		return plaintext;
 	}
 
 	public String affineEncode(String data, long slope, long intercept) {
@@ -67,59 +83,88 @@ public class SymmetricEncryptionLogic {
 		return builder.toString();
 	}
 
-	public String subtitutionDecode(String data, String keyStr) {
-//		data = data.toLowerCase();
-//		String plaint = "";
-//		for (int i = 0; i < data.length(); i++) {
-//			int charpos = keyStr.indexOf(data.charAt(i));
-//			int keyval = (charpos - key) % 26;
-//			if (keyval < 0) {
-//				keyval = keyStr.length() + keyval;
-//			}
-//			char replaceval = keyStr.charAt(keyval);
-//			plaint = plaint + replaceval;
-//		}
-//		return plaint;
-		return null;
-	}
-
 	public String vigenereEncode(String data, String key) {
-//		char[] msg = data.toCharArray();
-//		int lenght = msg.length;
-//		int i, j;
-//		char[] key = new char[lenght];
-//		char[] encrypt = new char[lenght];
-//
-//		for (i = 0, j = 0; i < lenght; ++i, ++j) {
-//			if (j == keyword.length()) {
-//				j = 0;
-//			}
-//			key[i] = keyword.charAt(j);
-//		}
-//		
-//		 for(i = 0; i < lenght; ++i)
-//			 encrypt[i] = (char) (((msg[i] + key[i]) % 26) + 'A');
-//		 return encrypt;
 		String encrypt = "";
 		data = data.toUpperCase();
 		key = key.toUpperCase();
 		for (int i = 0, j = 0; i < data.length(); i++) {
 			char letter = data.charAt(i);
-			encrypt += (char) ((letter + key.charAt(j) - 2 * 'A') % 26 + 'A');//(char)(((letter - 65) + (key.charAt(j)-65)) % 26 + 65);
+			encrypt += (char) ((letter + key.charAt(j) - 2 * 'A') % 26 + 'A');// (char)(((letter - 65) +
+																				// (key.charAt(j)-65)) % 26 + 65);
 			j = ++j % key.length();
 		}
 		return encrypt;
 	}
-	
+
 	public String vigenereDecode(String data, String key) {
 		String decode = "";
 		data = data.toUpperCase();
 		for (int i = 0, j = 0; i < data.length(); i++) {
 			char letter = data.charAt(i);
-			decode += (char)((letter - key.charAt(j) + 26) % 26 + 65);
+			decode += (char) ((letter - key.charAt(j) + 26) % 26 + 65);
 			j = ++j % key.length();
 		}
 		return decode;
+	}
+
+	private int[][] getKeyMatrix(String key) {
+		double sq = Math.sqrt(key.length());
+
+		if (sq != (long) sq) {
+			return null;
+		}
+
+		int len = (int) sq;
+		int[][] keyMatrix = new int[len][len];
+		int k = 0;
+		for (int i = 0; i < len; i++) {
+			for (int j = 0; j < len; j++) {
+				keyMatrix[i][j] = ((int) key.charAt(k)) - 97;
+				k++;
+			}
+		}
+		return keyMatrix;
+	}
+
+	private static void isValidMatrix(int[][] keyMatrix) {
+		int det = keyMatrix[0][0] * keyMatrix[1][1] - keyMatrix[0][1] * keyMatrix[1][0];
+		// If det=0, throw exception and terminate
+		if (det == 0) {
+			throw new java.lang.Error("Det equals to zero, invalid key matrix!");
+		}
+	}
+
+	private static void isValidReverseMatrix(int[][] keyMatrix, int[][] reverseMatrix) {
+		int[][] product = new int[2][2];
+		// Find the product matrix of key matrix times reverse key matrix
+		product[0][0] = (keyMatrix[0][0] * reverseMatrix[0][0] + keyMatrix[0][1] * reverseMatrix[1][0]) % 26;
+		product[0][1] = (keyMatrix[0][0] * reverseMatrix[0][1] + keyMatrix[0][1] * reverseMatrix[1][1]) % 26;
+		product[1][0] = (keyMatrix[1][0] * reverseMatrix[0][0] + keyMatrix[1][1] * reverseMatrix[1][0]) % 26;
+		product[1][1] = (keyMatrix[1][0] * reverseMatrix[0][1] + keyMatrix[1][1] * reverseMatrix[1][1]) % 26;
+		// Check if a=1 and b=0 and c=0 and d=1
+		// If not, throw exception and terminate
+		if (product[0][0] != 1 || product[0][1] != 0 || product[1][0] != 0 || product[1][1] != 1) {
+			throw new java.lang.Error("Invalid reverse matrix found!");
+		}
+	}
+
+	private static int[][] reverseMatrix(int[][] keyMatrix) {
+		int detmod26 = (keyMatrix[0][0] * keyMatrix[1][1] - keyMatrix[0][1] * keyMatrix[1][0]) % 26; // Calc det
+		int factor;
+		int[][] reverseMatrix = new int[2][2];
+		// Find the factor for which is true that
+		// factor*det = 1 mod 26
+		for (factor = 1; factor < 26; factor++) {
+			if ((detmod26 * factor) % 26 == 1) {
+				break;
+			}
+		}
+		// Calculate the reverse key matrix elements using the factor found
+		reverseMatrix[0][0] = keyMatrix[1][1] * factor % 26;
+		reverseMatrix[0][1] = (26 - keyMatrix[0][1]) * factor % 26;
+		reverseMatrix[1][0] = (26 - keyMatrix[1][0]) * factor % 26;
+		reverseMatrix[1][1] = keyMatrix[0][0] * factor % 26;
+		return reverseMatrix;
 	}
 
 	public String randomKey() {

@@ -25,6 +25,7 @@ import javax.swing.JTextArea;
 
 import Logic.SymmetricEncryptionLogic;
 import View.ViewComponent.AffineViewComponent;
+import View.ViewComponent.VigenereViewComponent;
 
 import javax.swing.JTextField;
 
@@ -33,6 +34,7 @@ public class SymmetricEncryption extends JFrame {
 	private SymmetricEncryptionLogic logic;
 	private JPanel contentPane;
 	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -71,7 +73,7 @@ public class SymmetricEncryption extends JFrame {
 		JPanel panel1 = dichChuyen();
 		JPanel panel2 = thayThe();
 		JPanel panel3 = new AffineViewComponent(logic, contentPane).affine(logic, contentPane);
-		JPanel panel4 = createJPanel("4");
+		JPanel panel4 = new VigenereViewComponent(logic, contentPane).vigenere(logic, contentPane);
 		JPanel panel5 = createJPanel("5");
 
 		/* add three tab with three JPanel */
@@ -91,8 +93,6 @@ public class SymmetricEncryption extends JFrame {
 		panel.add(lb);
 		return panel;
 	}
-	
-	
 
 	private JPanel dichChuyen() {
 		JPanel panel = new JPanel();
@@ -239,7 +239,7 @@ public class SymmetricEncryption extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
-				int returnVal = chooser.showOpenDialog(null); // replace null with your swing container
+				int returnVal = chooser.showOpenDialog(null);
 				File file = null;
 				if (returnVal == JFileChooser.APPROVE_OPTION)
 					file = chooser.getSelectedFile();
@@ -300,8 +300,6 @@ public class SymmetricEncryption extends JFrame {
 		});
 		btnNewButton_1.setBounds(52, 326, 139, 38);
 		panel_1.add(btnNewButton_1);
-
-		
 
 		JButton btnNewButton_1_1 = new JButton("Decode");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
